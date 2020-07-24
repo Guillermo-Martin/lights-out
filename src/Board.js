@@ -21,7 +21,7 @@ import './Board.css';
  *       O  O  .     (where . is off, and O is on)
  *       .  .  .
  *
- *    This would be: [[f, f, f], [t, t, f], [f, f, f]]
+ *    This would be: [[f, f, f], [t, t, f], [f, f, f]]  <-- GCM: each array in the array is a row
  *
  *  This should render an HTML table of individual <Cell /> components.
  *
@@ -30,7 +30,12 @@ import './Board.css';
  **/
 
 class Board extends Component {
+  static defaultProps = {
+    nrows: 5,
+    ncols: 5
+  }
 
+  // GCM: constructor to hold state; not yet defined
   constructor(props) {
     super(props);
 
@@ -42,6 +47,12 @@ class Board extends Component {
   createBoard() {
     let board = [];
     // TODO: create array-of-arrays of true/false values
+    // create rows
+    for(let i = 0; i < this.props.nrows; i++) {
+      board.push(<tr><td><Cell /></td></tr>);
+    }
+    // create cells
+    
     return board
   }
 
@@ -66,14 +77,26 @@ class Board extends Component {
     // win when every cell is turned off
     // TODO: determine is the game has been won
 
-    this.setState({board, hasWon});
+    // GCM:  hasWon state not defined yet
+    // this.setState({board, hasWon});
   }
 
 
   /** Render game board or winning message. */
 
   render() {
-
+    return(
+      <div>
+        {/* {this.createBoard()} */}
+        {/* <Cell isLit={false} /> */}
+        {/* <Cell isLit={true} /> */}
+        <table>
+          <tbody>
+            {this.createBoard()}
+          </tbody>
+        </table>
+      </div>
+    )
     // if the game is won, just show a winning msg & render nothing else
 
     // TODO

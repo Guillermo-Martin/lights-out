@@ -21,6 +21,7 @@ class Cell extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  // GCM: handleClick function - calls the 'flipCellsAroundMe()' function; not yet defined
   handleClick(evt) {
     // call up to the board to flip cells around this cell
     this.props.flipCellsAroundMe();
@@ -29,6 +30,7 @@ class Cell extends Component {
   render() {
     let classes = "Cell" + (this.props.isLit ? " Cell-lit" : "");
 
+    // GCM: cell has an onClick listener that executes the handleClick function
     return (
         <td className={classes} onClick={this.handleClick} />
     )
