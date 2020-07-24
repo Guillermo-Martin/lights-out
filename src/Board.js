@@ -46,12 +46,18 @@ class Board extends Component {
 
   createBoard() {
     let board = [];
+    let cells = [];
     // TODO: create array-of-arrays of true/false values
-    // create rows
-    for(let i = 0; i < this.props.nrows; i++) {
-      board.push(<tr><td><Cell /></td></tr>);
-    }
+
     // create cells
+    for(let j = 0; j < this.props.ncols; j++) {
+      cells.push(<td><Cell /></td>);
+    }
+
+    // create rows to hold the cells
+    for(let i = 0; i < this.props.nrows; i++) {
+      board.push(<tr>{cells}</tr>);
+    }
     
     return board
   }
