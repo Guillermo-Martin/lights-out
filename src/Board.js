@@ -32,7 +32,7 @@ import './Board.css';
 class Board extends Component {
   static defaultProps = {
     nrows: 5,
-    ncols: 5
+    ncols: 5,
   }
 
   // GCM: constructor to hold state; not yet defined
@@ -46,16 +46,23 @@ class Board extends Component {
 
   createBoard() {
     let board = [];
-    let cells = [];
     // TODO: create array-of-arrays of true/false values
 
-    // create cells
-    for(let j = 0; j < this.props.ncols; j++) {
-      cells.push(<td><Cell /></td>);
-    }
-
-    // create rows to hold the cells
+    // create rows and randomly lit cells
+    // for every row (nrows prop), create a cells array that will hold n (ncol prop) randomly lit cells 
     for(let i = 0; i < this.props.nrows; i++) {
+      // array to hold cells for a single row (will be rendered in the board)
+      let cells = [];
+
+      // create a randomly lit cell and push into cells array
+      for(let j = 0; j < this.props.ncols; j++) {
+        let randomNum = Math.floor(Math.random() * 2 + 1);
+        if(randomNum === 1) {
+          cells.push(<Cell isLit={true} />)
+        } else {
+          cells.push(<Cell isLit={false} />)
+        }
+      }
       board.push(<tr>{cells}</tr>);
     }
     
