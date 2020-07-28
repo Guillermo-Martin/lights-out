@@ -50,20 +50,24 @@ class Board extends Component {
 
     // create rows and randomly lit cells
     // for every row (nrows prop), create a cells array that will hold n (ncol prop) randomly lit cells 
-    for(let i = 0; i < this.props.nrows; i++) {
+    // y will be the y-coordinate
+    for(let y = 0; y < this.props.nrows; y++) {
       // array to hold cells for a single row (will be rendered in the board)
       let cells = [];
 
       // create a randomly lit cell and push into cells array
-      for(let j = 0; j < this.props.ncols; j++) {
+      // x will be the x-coordinate
+      for(let x = 0; x < this.props.ncols; x++) {
         let randomNum = Math.floor(Math.random() * 2 + 1);
+        let coordinates = `${y}-${x}`;
         if(randomNum === 1) {
-          cells.push(<Cell isLit={true} />)
+          cells.push(<Cell key={coordinates} isLit={true} />)
         } else {
-          cells.push(<Cell isLit={false} />)
+          cells.push(<Cell key={coordinates} isLit={false} />)
         }
       }
-      board.push(<tr>{cells}</tr>);
+      // push array of cells into the board array to be rendered
+      board.push(<tr key={y}>{cells}</tr>);
     }
     
     return board
@@ -100,9 +104,6 @@ class Board extends Component {
   render() {
     return(
       <div>
-        {/* {this.createBoard()} */}
-        {/* <Cell isLit={false} /> */}
-        {/* <Cell isLit={true} /> */}
         <table>
           <tbody>
             {this.createBoard()}
