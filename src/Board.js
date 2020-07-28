@@ -33,13 +33,19 @@ class Board extends Component {
   static defaultProps = {
     nrows: 5,
     ncols: 5,
+    chanceLightStartsOn: 0.25
   }
 
   // GCM: constructor to hold state; not yet defined
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    // TODO: set initial state
+  //   // TODO: set initial state
+  // }
+
+  state = {
+    hasWon: false,
+    board: this.createBoard()
   }
 
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
@@ -47,30 +53,19 @@ class Board extends Component {
   createBoard() {
     let board = [];
     // TODO: create array-of-arrays of true/false values
-
-    // create rows and randomly lit cells
-    // for every row (nrows prop), create a cells array that will hold n (ncol prop) randomly lit cells 
-    // y will be the y-coordinate
     for(let y = 0; y < this.props.nrows; y++) {
       // array to hold cells for a single row (will be rendered in the board)
-      let cells = [];
+      let row = [];
 
-      // create a randomly lit cell and push into cells array
-      // x will be the x-coordinate
+      // create array of true/false values
       for(let x = 0; x < this.props.ncols; x++) {
-        let randomNum = Math.floor(Math.random() * 2 + 1);
-        let coordinates = `${y}-${x}`;
-        if(randomNum === 1) {
-          cells.push(<Cell key={coordinates} isLit={true} flipCellsAroundMe={this.flipCellsAround}/>)
-        } else {
-          cells.push(<Cell key={coordinates} isLit={false} />)
-        }
+        // if Math.random() is less than this.props.chanceLightStartsOn, push true into row array
+        row.push(Math.random() < this.props.chanceLightStartsOn);
+        
       }
-      // push array of cells into the board array to be rendered
-      board.push(<tr key={y}>{cells}</tr>);
+      board.push(row);
     }
-    
-    return board
+    return board;
   }
 
   /** handle changing a cell: update board & determine if winner */
@@ -94,7 +89,6 @@ class Board extends Component {
     // win when every cell is turned off
     // TODO: determine is the game has been won
 
-    // GCM:  hasWon state not defined yet
     // this.setState({board, hasWon});
   }
 
@@ -104,11 +98,27 @@ class Board extends Component {
   /** Render game board or winning message. */
 
   render() {
+    // create the cells for the board
+
+    // array to hold the cells to be rendered
+    let gameBoard = [];
+
+    // for every row, create the cells
+    for(let y = 0; y < this.props.nrows; y++) {
+      let row = [];
+        for(let x = 0; x < this.props.ncols; x++) {
+          let coord = `${y}-${x}`
+          row.push(<Cell key={coord} isLit={this.state.board[y][x]} />)
+        }
+        gameBoard.push(<tr key={y}>{row}</tr>);
+    }
+
+
     return(
       <div>
         <table>
           <tbody>
-            {this.createBoard()}
+            {gameBoard}
           </tbody>
         </table>
       </div>
