@@ -61,7 +61,7 @@ class Board extends Component {
         let randomNum = Math.floor(Math.random() * 2 + 1);
         let coordinates = `${y}-${x}`;
         if(randomNum === 1) {
-          cells.push(<Cell key={coordinates} isLit={true} />)
+          cells.push(<Cell key={coordinates} isLit={true} flipCellsAroundMe={this.flipCellsAround}/>)
         } else {
           cells.push(<Cell key={coordinates} isLit={false} />)
         }
@@ -97,6 +97,8 @@ class Board extends Component {
     // GCM:  hasWon state not defined yet
     // this.setState({board, hasWon});
   }
+
+  
 
 
   /** Render game board or winning message. */
